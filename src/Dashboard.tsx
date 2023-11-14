@@ -1,12 +1,11 @@
-import React from "react"
-import { getAllClients, getPizzaVisits } from "./api/api"
+import React, { useState } from "react"
+import { getAllClients } from "./api/api"
+import { UserTable } from "./components/UserTable";
 
 export const Dashboard=()=>{
-    const allClients=getAllClients();
-    const allPizzaVisits=getPizzaVisits()
+
     return(
         <div>
-
         </div>
     )
 }

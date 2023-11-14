@@ -1,9 +1,8 @@
 import { clients, pizzasEaten } from "./MockData";
 import { Client, PizzasVisits } from "./MockDataTypes";
 
-export const getAllClients = () =>{
-    new Promise((resolve, reject) => {
-    
+export const getAllClients = async ():Promise<Client[]> =>{
+   return new Promise((resolve, reject) => {
         if (!clients) {
           return setTimeout(
             () => reject(new Error('No Clients Found')),
@@ -14,8 +13,8 @@ export const getAllClients = () =>{
         setTimeout(() => resolve(clients), 250);
       });
 }
-export const getClient=(userID:number)=>{
-    new Promise((resolve, reject) => {
+export const getClient= async (userID:number)=>{
+   return new Promise((resolve, reject) => {
         const user = clients[userID];
     
         if (!user) {
@@ -28,8 +27,8 @@ export const getClient=(userID:number)=>{
         setTimeout(() => resolve(clients[userID]), 250);
       });
 }
-export const addClient=(client:Client)=>{
-    new Promise((resolve, reject) => {
+export const addClient=async (client:Client)=>{
+    return new Promise((resolve, reject) => {
       if (!client.firstName || !client.lastName) {
         reject(new Error('Not all information provided'));
       }
@@ -42,8 +41,8 @@ export const addClient=(client:Client)=>{
       setTimeout(() => resolve(true), 250);
     });
 }
-export const getPizzaVisits=()=>{
-    new Promise((resolve, reject) => {
+export const getPizzaVisits=async (): Promise<PizzasVisits[]>=>{
+    return new Promise((resolve, reject) => {
         if (!pizzasEaten) {
           reject(new Error('Users not found'));
         }
@@ -51,8 +50,8 @@ export const getPizzaVisits=()=>{
       });
 }
 
-export const getPizzaVisit=(visitID:number)=>{
-    new Promise((resolve, reject) => {
+export const getPizzaVisit=async (visitID:number)=>{
+   return new Promise((resolve, reject) => {
         const pizzaVisit = pizzasEaten[visitID];
     
         if (!pizzaVisit) {
@@ -66,8 +65,8 @@ export const getPizzaVisit=(visitID:number)=>{
       });
 }
 
-export const addPizzaVisit=(pizzaVisit:PizzasVisits)=>{
-    new Promise((resolve, reject) => {
+export const addPizzaVisit=async(pizzaVisit:PizzasVisits)=>{
+    return new Promise((resolve, reject) => {
      if (!pizzaVisit.pizzasIds || !pizzaVisit.clientId || !pizzaVisit.dateEaten) {
             reject(new Error('Not all information provided'));
           }
