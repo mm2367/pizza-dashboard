@@ -1,5 +1,5 @@
+import { clients, pizzasEaten } from "./MockData";
 import { Client, PizzasVisits } from "./MockDataTypes";
-import { clients, pizzasEaten } from "./mockData";
 
 export const getAllClients = () =>{
     new Promise((resolve, reject) => {
