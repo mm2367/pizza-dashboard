@@ -16,7 +16,7 @@ type DD = `${0}${oneToNine}` | `${1|2}${zeroToNine}` | `3${0|1}`
 /**
  * MM/DD/YYYY
  */
-type RawDateString = `${MM}/${DD}/${YYYY}`;
+export type RawDateString = `${MM}/${DD}/${YYYY}`;
 export type toppings='cheese'| 'pepperoni' | 'pineapple'| 'anchovie'|'chicken'
 
 export interface Client{

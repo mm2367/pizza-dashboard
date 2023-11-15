@@ -1,5 +1,5 @@
-import { clients, pizzasEaten } from "./MockData";
-import { Client, PizzasVisits } from "./MockDataTypes";
+import { clients, pizzasEaten, updateClient } from "./MockData";
+import { Client, PizzasVisits, RawDateString } from "./MockDataTypes";
 
 export const getAllClients = async ():Promise<Client[]> =>{
    return new Promise((resolve, reject) => {
@@ -27,17 +27,15 @@ export const getClient= async (userID:number)=>{
         setTimeout(() => resolve(clients[userID]), 250);
       });
 }
-export const addClient=async (client:Client)=>{
+export const addClient=async (client:{firstName:string,lastName:string})=>{
     return new Promise((resolve, reject) => {
       if (!client.firstName || !client.lastName) {
         reject(new Error('Not all information provided'));
       }
   
       const newId = clients.length
-      const newClient:Client = {...client,id: newId,};
-  
-      clients.push({ ...clients,...newClient });
-  
+      const newClient:Client = {...client,id: newId,}
+      updateClient(newClient);
       setTimeout(() => resolve(true), 250);
     });
 }
@@ -65,14 +63,14 @@ export const getPizzaVisit=async (visitID:number)=>{
       });
 }
 
-export const addPizzaVisit=async(pizzaVisit:PizzasVisits)=>{
+export const addPizzaVisit= async(clientVisit:{pizzaIds:number[],clientID:number,dateEaten:RawDateString})=>{
     return new Promise((resolve, reject) => {
-     if (!pizzaVisit.pizzasIds || !pizzaVisit.clientId || !pizzaVisit.dateEaten) {
+     if (clientVisit.pizzaIds || !clientVisit.clientID || !clientVisit.dateEaten) {
             reject(new Error('Not all information provided'));
           }
         
         const newId = pizzasEaten.length
-        const newPizzaVisit:PizzasVisits = {...pizzaVisit,visitId: newId,};
+        const newPizzaVisit:PizzasVisits = {pizzasIds:clientVisit.pizzaIds,clientId:clientVisit.clientID,dateEaten:clientVisit.dateEaten,visitId: newId};
       
         pizzasEaten.push({ ...pizzasEaten,...newPizzaVisit });
       
