@@ -1,4 +1,5 @@
-import { clients, pizzasEaten, updateClient } from "./MockData";
+import { ClientRequest } from "http";
+import { clients, pizzasEaten } from "./MockData";
 import { Client, PizzasVisits, RawDateString } from "./MockDataTypes";
 
 export const getAllClients = async ():Promise<Client[]> =>{
@@ -34,8 +35,8 @@ export const addClient=async (client:{firstName:string,lastName:string})=>{
       }
   
       const newId = clients.length
-      const newClient:Client = {...client,id: newId,}
-      updateClient(newClient);
+      const newClient:Client = {...client,id: newId};
+      clients.push({...newClient});
       setTimeout(() => resolve(true), 250);
     });
 }

@@ -1,13 +1,16 @@
 import React, {useState } from "react"
 import { addClient } from "../api/api";
 
-
-export const AddPerson=()=>{
+export interface AddPersonProps{
+    handleAddPersonSubmit:(person:{firstName:string,lastName:string})=> void;
+}
+export const AddPerson=(props:AddPersonProps)=>{
     const [firstName,setFirstName]=useState<string>("");
     const [lastName,setLastName]=useState<string>("");
+    
     const handleSubmit=async (e)=>{
         e.preventDefault()
-       await addClient({"firstName":firstName,"lastName":lastName})
+        props.handleAddPersonSubmit({"firstName":firstName,"lastName":lastName});
     
     }
 

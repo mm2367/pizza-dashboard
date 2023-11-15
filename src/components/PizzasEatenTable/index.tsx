@@ -1,25 +1,52 @@
 import React, { useCallback, useEffect, useState } from "react"
-import { PizzasVisits } from "../../api/MockDataTypes";
+import { PizzasVisits, RawDateString } from "../../api/MockDataTypes";
 import { useFilters, useTable } from "react-table";
 import { pizzasEatenColumns } from "./columns";
-import { getAllClients, getPizzaVisits } from "../../api/api";
 import Select from "react-select"
+import { AddPizza } from "../AddPizza";
+import { pizzasEaten } from "../../api/MockData";
 export const  PizzasEatenTable=()=>{
-    const [pizzaVisitsData,setClientData]=useState<PizzasVisits[]>([]);
+    const [pizzaVisitsData,setPizzaVisitData]=useState<PizzasVisits[]>([]);
     const [clientUserIdsOptions,setclientUserIdsOptions]=useState<{value:number,label:string}[]|[]>([]);
 
-    const [filterValue,setFilterValue]=useState<"">("");
-
     useEffect(()=>{
-        getPizzaVisits().then((result)=> { return result}).then((data)=>{
-          setClientData(data);
-      });
-      getAllClients().then((result)=> { return result}).then((clientUserIds)=>{
-        const clientIds=clientUserIds.map((client)=> {return {value:client.id, label:client.firstName +" " + client.lastName}})
+      if(localStorage.getItem('allClients')){
+        let allClients=JSON.parse(localStorage.getItem('allClients')??'');
+        const clientIds=allClients.map((client)=> {return {value:client.id, label:client.firstName +" " + client.lastName}})
         setclientUserIdsOptions(clientIds)
-      });
+
+      }   
+      if(!localStorage.getItem('allPizzaVisits')){
+        localStorage.setItem('allPizzaVisits',JSON.stringify(pizzasEaten));
+      }
+     setPizzaVisitData(JSON.parse(localStorage.getItem('allPizzaVisits')??''))  
     },[]);
 
+    useEffect(() => {
+      const handleStorage = () => {
+        if(!localStorage.getItem('allPizzaVisits')){
+          localStorage.setItem('allPizzaVisits',JSON.stringify(pizzasEaten));
+        }
+        setPizzaVisitData(JSON.parse(localStorage.getItem('allPizzaVisits')??''))
+        if(localStorage.getItem('allClients')){
+          let allClients=JSON.parse(localStorage.getItem('allClients')??'');
+          const clientIds=allClients.map((client)=> {return {value:client.id, label:client.firstName +" " + client.lastName}})
+          setclientUserIdsOptions(clientIds)
+  
+        }
+      }
+    
+      window.addEventListener('storage', handleStorage)
+      return () => window.removeEventListener('storage', handleStorage)
+    }, [])
+    const handleAddPizzaSubmit=(pizzaVisit:{clientId:number,pizzasIds:number[], dateEaten:RawDateString})=>{
+      if(localStorage.getItem('allPizzaVisits')){
+        const newId = JSON.parse(localStorage.getItem('allPizzaVisits')??'').length;
+        const newVisit:PizzasVisits = {...pizzaVisit,visitId: newId};
+        localStorage.setItem('allPizzaVisits',JSON.stringify([...pizzaVisitsData,newVisit]))
+        window.dispatchEvent(new Event('storage'))
+      }
+    }
     // Use the useTable Hook to send the columns and data to build the table
     const {
       getTableProps, // table props from react-table
@@ -43,7 +70,7 @@ export const  PizzasEatenTable=()=>{
             </tr>
             ))
     },[pizzaVisitsData])
-    const [filterInput, setFilterInput] = useState("");
+
 
 // Update the state when input changes
 const handleFilterChange = e => {
@@ -54,10 +81,11 @@ const handleFilterChange = e => {
 
     return (
       <div className='my-4'>
+        <AddPizza handleAddPersonSubmit={handleAddPizzaSubmit} clientIds={clientUserIdsOptions}/>
         <Select
         options={clientUserIdsOptions}
         onChange={handleFilterChange}
-        placeholder={"Select Client"}/>
+        placeholder={"Filter By Client"}/>
 
         <table {...getTableProps()}>
           <thead>

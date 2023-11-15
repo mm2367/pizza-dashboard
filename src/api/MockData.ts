@@ -1,6 +1,6 @@
 import { Client, Pizza, PizzasVisits } from "./MockDataTypes";
 
-export let clients: Client[] = [{id: 0,firstName: 'John',lastName: 'Doe'},
+export const clients: Client[] = [{id: 0,firstName: 'John',lastName: 'Doe'},
     {id: 1, firstName: 'Joanne',lastName: 'Doe'},
     {id: 2,firstName: 'Milam',lastName: 'Milhouse'},
     {id: 3,firstName: 'Kelly', lastName: 'Clarkson'},
@@ -11,9 +11,6 @@ export let clients: Client[] = [{id: 0,firstName: 'John',lastName: 'Doe'},
     {id: 8,firstName: 'Madonna', lastName: 'Smith'},
     {id: 9, firstName: 'Sam', lastName: 'Smith'},]
 
- export const updateClient=(client:Client)=>{
-    clients=[...clients,client];
-  }
 
 export let pizzasEaten:PizzasVisits[]=
 [
