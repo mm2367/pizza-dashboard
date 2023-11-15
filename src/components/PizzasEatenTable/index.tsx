@@ -65,7 +65,7 @@ export const  PizzasEatenTable=()=>{
         return headerGroups.map(headerGroup => (
             <tr {...headerGroup.getHeaderGroupProps()}>
               {headerGroup.headers.map(column => (
-                <th {...column.getHeaderProps()}>{column.render("Header")}</th>
+                <th className="table-header-width" {...column.getHeaderProps()}>{column.render("Header")}</th>
               ))}
             </tr>
             ))
