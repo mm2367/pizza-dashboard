@@ -1,7 +1,6 @@
 
 import React, {useState } from "react"
 import Select from "react-select"
-import {addPizzaVisit, getAllClients } from "../api/api";
 import {convertToDateString} from "../util"
 
 import { RawDateString } from "../api/MockDataTypes";
@@ -13,12 +12,13 @@ export const AddPizza=(props:AddPizzaProps)=>{
     const [selectedClientId,setSelectedClientId]=useState<number|undefined>();
     const [selectedToppings,setSelectedToppings]=useState<number[]>();
     const [selectedDate,setSelectedDate]=useState<string>("");
-    const pizzaOptions=[{value:'cheese',label:'Cheese'}, {value:'pepperoni', label:'Pepperoni'},{value:'pineapple', label:'Pineapple'},{ value:'anchovie', label:'Anchovie'},{value:'chicken',label:'Chicken'}]
+    const pizzaOptions=[{value:0,label:'Cheese'}, {value:1, label:'Pepperoni'},{value:2, label:'Pineapple'},{ value:3, label:'Anchovie'},{value:4,label:'Chicken'}]
     const handleToppingSelection=(toppings)=>{
         let selections= toppings.map((topping)=>{
             //@ts-ignore
             return topping.value
         })
+
         setSelectedToppings(selections);
     }
 

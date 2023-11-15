@@ -1,5 +1,4 @@
 import React, {useState } from "react"
-import { addClient } from "../api/api";
 
 export interface AddPersonProps{
     handleAddPersonSubmit:(person:{firstName:string,lastName:string})=> void;

@@ -36,4 +36,4 @@ export let pizzasEaten:PizzasVisits[]=
 
 ]
 
-export const Pizzas:Pizza[]=[{id:0,type:'cheese'},{id:0,type:'pepperoni'},{id:0,type:'pineapple'},{id:0,type:'anchovie'},{id:0,type:'chicken'}]
+export const Pizzas:string[]=['cheese','pepperoni','pineapple','anchovie','chicken'];

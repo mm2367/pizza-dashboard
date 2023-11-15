@@ -1,4 +1,3 @@
-import { ClientRequest } from "http";
 import { clients, pizzasEaten } from "./MockData";
 import { Client, PizzasVisits, RawDateString } from "./MockDataTypes";
 
